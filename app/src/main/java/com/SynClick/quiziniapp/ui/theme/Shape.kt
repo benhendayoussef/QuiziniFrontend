@@ -15,3 +15,11 @@ val BottomCardShape= Shapes(
     
 )
 
+val leftRoundedShape= Shapes(
+    large=RoundedCornerShape(
+
+        topStart = 20.dp,
+        bottomStart = 20.dp
+    )
+)
+

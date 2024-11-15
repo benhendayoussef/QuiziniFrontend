@@ -33,11 +33,18 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.SynClick.quiziniapp.Assets.LoadingAnimation
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.ClientService
+import com.SynClick.quiziniapp.Data.DAOs.serverSevices.QuestionnaireService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.Services
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.TopicService
+import com.SynClick.quiziniapp.Data.Data
+import com.SynClick.quiziniapp.Data.Models.Topic
 import com.SynClick.quiziniapp.Pages.Authentification.Authentif
+import com.SynClick.quiziniapp.Pages.MainPages.MainPage
 import com.SynClick.quiziniapp.Pages.Topic.TopicSelection
 import com.SynClick.quiziniapp.ui.theme.QuiziniAppTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -61,12 +68,35 @@ class MainActivity : ComponentActivity() {
         Services.setClientService(clientService)
         val topicService: TopicService = retrofit.create(TopicService::class.java)
         Services.setTopicService(topicService)
+        val questionnaireService: QuestionnaireService = retrofit.create(QuestionnaireService::class.java)
+        Services.setQuestionnaireService(questionnaireService)
     }
 }
 
 @Composable
 @Preview(showBackground = true)
 fun SplashScreen() {
+
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            try {
+                val callSelected =
+                    Services.getTopicService().getAllActivatedUserTopics("Bearer " + Data.token)
+                val responseSelected = withContext(Dispatchers.IO) { callSelected.execute() }
+                if (responseSelected.isSuccessful) {
+                    println("Response: ${responseSelected.body()}")
+                    println("Response Size: ${responseSelected.body()?.userTopics?.size}")
+                    Data.userTopics = responseSelected.body()?.userTopics
+                } else {
+                    println("Error: ${responseSelected.code()}")
+                    // Handle error
+                }
+            } catch (e: Exception) {
+                println("Error: ${e.message}")
+            }
+        }
+    }
     val durationMillis = 2000 // Animation duration
     var startAlpha by remember { mutableStateOf(0f) } // Initial alpha state
     val endAlpha = 1f // Final alpha value
@@ -83,7 +113,7 @@ fun SplashScreen() {
         animationSpec = tween(durationMillis = durationMillis),
         finishedListener = {
             Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(context, /*OnBoardingScreen*/TopicSelection::class.java)
+                val intent = Intent(context, /*OnBoardingScreen*/MainPage::class.java)
                 context.startActivity(intent)
                 (context as? ComponentActivity)?.finish() // Optional: finish the current activity so the user can't go back to it
             }, 1000)

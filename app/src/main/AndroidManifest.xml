@@ -46,7 +46,11 @@
             android:name=".Pages.Topic.TopicLevelSelection"
             android:exported="true"
             android:theme="@style/Theme.QuiziniApp">
-        </activity>
+        </activity><activity
+        android:name=".Pages.MainPages.MainPage"
+        android:exported="true"
+        android:theme="@style/Theme.QuiziniApp">
+    </activity>
     </application>
 
 </manifest>

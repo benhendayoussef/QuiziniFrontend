@@ -34,6 +34,10 @@ public class userEntityDto {
         this.topicsId = topicsId;
         this.topicsName = topicsName;
     }
+    public userEntityDto() {
+
+    }
+
     public userEntityDto(Set<Integer> topicsId) {
         this.topicsId = topicsId;
     }

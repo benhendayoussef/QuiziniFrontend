@@ -182,7 +182,7 @@ fun TopicsFragment() {
             ){
 
                 Button(onClick = {
-
+                    if(selectedTopic?.filter { it.value }?.size!! >= 3)
                     coroutineScope.launch {
                         try {
                             setIsSending(true)
@@ -213,7 +213,7 @@ fun TopicsFragment() {
                         .align(Alignment.CenterHorizontally),
                     shape = RoundedCornerShape(20.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = if(selectedTopic?.filter { it.value }?.size!! >= 3) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                     )
 
                 ){
@@ -226,7 +226,7 @@ fun TopicsFragment() {
                             CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
                         }
                     } else
-                    Text("Continue ("+ selectedTopic?.filter { it.value }?.size+" Selected)",
+                    Text(text=(if(selectedTopic?.filter { it.value }?.size!! >= 3) "Continue" else "desactivated" )+" ("+ selectedTopic?.filter { it.value }?.size+"/3 Selected)",
                         color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.padding(5.dp),
                     fontSize = 20.sp)

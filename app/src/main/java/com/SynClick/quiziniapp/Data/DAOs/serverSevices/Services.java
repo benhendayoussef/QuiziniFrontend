@@ -4,6 +4,8 @@ public class Services {
 
     public static ClientService clientService;
     public static TopicService topicService;
+    public static QuestionnaireService questionnaireService;
+
 
 
     public static TopicService getTopicService() {
@@ -22,4 +24,13 @@ public class Services {
     public static void setClientService(ClientService clientService) {
         Services.clientService = clientService;
     }
+
+    public static QuestionnaireService getQuestionnaireService() {
+        return questionnaireService;
+    }
+
+    public static void setQuestionnaireService(QuestionnaireService questionnaireService) {
+        Services.questionnaireService = questionnaireService;
+    }
+
 }

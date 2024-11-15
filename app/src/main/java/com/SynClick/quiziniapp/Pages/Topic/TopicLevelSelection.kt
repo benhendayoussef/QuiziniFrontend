@@ -1,6 +1,7 @@
 package com.SynClick.quiziniapp.Pages.Topic
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -48,6 +49,7 @@ import com.SynClick.quiziniapp.Data.DAOs.serverSevices.Services
 import com.SynClick.quiziniapp.Data.Data
 import com.SynClick.quiziniapp.Data.Models.Topic
 import com.SynClick.quiziniapp.Data.Models.userEntityDto
+import com.SynClick.quiziniapp.Pages.MainPages.MainPage
 import com.SynClick.quiziniapp.R
 import com.SynClick.quiziniapp.ui.theme.QuiziniAppTheme
 import kotlinx.coroutines.Dispatchers
@@ -86,13 +88,14 @@ fun TopicsLevelFragment() {
                     println("Response: ${responseSelected.body()}")
                     println("Response Size: ${responseSelected.body()?.userTopics?.size}")
                     Data.userTopics = responseSelected.body()?.userTopics
-                    setTopics(responseSelected.body()?.userTopics?.map { it as Topic } ?: emptyList())
-                    setTopicRank(responseSelected.body()?.userTopics?.map { it as Topic }?.map { it.id to it.userRank }?.toMap() ?: emptyMap())
-                    setSelectedDifficulties(responseSelected.body()?.userTopics?.map { it.id to
+                    Data.userTopics.map { println(it.userRank) }
+                    setTopics(Data.userTopics)
+                    setTopicRank(Data.userTopics?.map { it as Topic }?.map { it.id to it.userRank }?.toMap() ?: emptyMap())
+                    setSelectedDifficulties(Data.userTopics?.map { it.id to
                             if(it.userRank<=0.1) "Entry-level"
-                            else if(it.userRank==0.2) "Mid-level"
-                            else if(it.userRank==0.3) "Experienced"
-                            else if(it.userRank==0.4)"I've suffered enough"
+                            else if(it.userRank<= 0.2) "Mid-level"
+                            else if(it.userRank<=0.3) "Experienced"
+                            else if(it.userRank<=0.4)"I've suffered enough"
                             else "Entry-level"
                     }?.toMap() ?: emptyMap())
 
@@ -153,13 +156,26 @@ fun TopicsLevelFragment() {
                         ) {
                             TopicLevel(topicInfo = topics!![index])
                         }
+                        println("Topic: ${Data.userTopics[index].userRank}")
+
                         DifficultySelector(
                             topic = topics!![index].name,
                             onDifficultySelected = { difficulty ->
                                 val newSelectedDifficulties = selectedDifficulties.toMutableMap()
                                 newSelectedDifficulties[topics[index].id] = difficulty
                                 setSelectedDifficulties(newSelectedDifficulties)
-                            }
+                            },
+                            level = selectedDifficulties[topics[index].id]?.let {
+                                when (it) {
+                                    "Entry-level" -> 0
+                                    "Mid-level" -> 1
+                                    "Experienced" -> 2
+                                    "I've suffered enough" -> 3
+                                    else -> 2
+                                }
+                            } ?: 3,
+                            changeable=Data.userTopics[index].userRank==0.0
+
                         )
                     }
                 }
@@ -179,13 +195,13 @@ fun TopicsLevelFragment() {
                                 println("Selected difficulties: $selectedDifficulties")
                                 val a: List<Map<String, Object>> = selectedDifficulties.map { (topicId, difficulty) ->
                                     mapOf(
-                                        "topicId" to topicId as Object,
+                                        "topicId" to Integer.parseInt(topicId) as Object,
                                         "rank" to when (difficulty) {
-                                            "Entry-level" -> 0.1 as Object
-                                            "Mid-level" -> 0.2 as Object
-                                            "Experienced" -> 0.4 as Object
-                                            "I've suffered enough" -> 0.6 as Object
-                                            else -> 0.1 as Object
+                                            "Entry-level" -> 1 as Object
+                                            "Mid-level" -> 2 as Object
+                                            "Experienced" -> 3 as Object
+                                            "I've suffered enough" -> 4 as Object
+                                            else -> 1 as Object
                                         }
                                     )
                                 }
@@ -193,11 +209,18 @@ fun TopicsLevelFragment() {
                                 val call = Services.getClientService().updateUserRanks("Bearer " + Data.token, a)
                                 val response = withContext(Dispatchers.IO) { call.execute() }
                                 if (response.isSuccessful) {
-                                    println("Response: ${response.body()}")
+                                    println("Response: ${response.body()?.message}")
+
+                                    val intent = Intent(context, /*OnBoardingScreen*/MainPage::class.java)
+                                    context.startActivity(intent)
+                                    (context as? ComponentActivity)?.finish() // Optional: finish the current activity so the user can't go back to it
+
 
 
                                 } else {
                                     println("Error: ${response.code()}")
+                                    println("Error Body: ${response.errorBody()?.string()}")
+                                    println("Error Message: ${response.message()}")
                                     // Handle error
                                 }
                                 setIsSending(false)
@@ -239,10 +262,10 @@ fun TopicsLevelFragment() {
 }
 
 @Composable
-fun DifficultySelector(topic: String, onDifficultySelected: (String) -> Unit) {
+fun DifficultySelector(topic: String, level: Int,changeable:Boolean, onDifficultySelected: (String) -> Unit) {
     val difficultyLevels = listOf("Entry-level", "Mid-level", "Experienced", "I've suffered enough")
-    var sliderPosition by remember { mutableStateOf(0f) }
-    val selectedDifficulty = difficultyLevels[sliderPosition.toInt()]
+    var sliderPosition by remember { mutableStateOf(level) }
+    val selectedDifficulty = difficultyLevels[sliderPosition]
 
     Column(
         modifier = Modifier
@@ -251,19 +274,26 @@ fun DifficultySelector(topic: String, onDifficultySelected: (String) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Select Difficulty for $topic", fontSize = 20.sp)
-        Spacer(modifier = Modifier.height(5.dp))
-        Slider(
-            value = sliderPosition,
-            onValueChange = {
-                sliderPosition = it
-                onDifficultySelected(selectedDifficulty)
-            },
-            valueRange = 0f..(difficultyLevels.size - 1).toFloat(),
-            steps = difficultyLevels.size - 2,
-            modifier = Modifier.fillMaxWidth()
+        Text(
+            text = if (changeable) "Select Difficulty for $topic" else "$topic is already selected",
+            fontSize = 20.sp
         )
-        Text(text = "Selected Difficulty: $selectedDifficulty", fontSize = 18.sp)
+        Spacer(modifier = Modifier.height(5.dp))
+        if (changeable) {
+            Slider(
+                value = sliderPosition.toFloat(),
+                onValueChange = {
+                    sliderPosition = it.toInt()
+
+                    onDifficultySelected(selectedDifficulty)
+                },
+                valueRange = 0f..(difficultyLevels.size - 1).toFloat(),
+                steps = difficultyLevels.size - 2,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(text = "Selected Difficulty: $selectedDifficulty", fontSize = 18.sp)
+
+        }
     }
 }
 
