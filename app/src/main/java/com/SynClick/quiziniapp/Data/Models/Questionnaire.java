@@ -6,6 +6,15 @@ public class Questionnaire {
     int id,numberOfQuestions,numberCorrectedAnswers;
     String creationTime,description,answeredAt,userId;
     Boolean completed;
+    List<Question> questions;
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 
     public Questionnaire(int id, int numberOfQuestions, int numberCorrectedAnswers, String creationTime, String description, String answeredAt, String userId, Boolean completed) {
         this.id = id;
@@ -16,6 +25,17 @@ public class Questionnaire {
         this.answeredAt = answeredAt;
         this.userId = userId;
         this.completed = completed;
+    }
+    public Questionnaire(int id, int numberOfQuestions, int numberCorrectedAnswers, String creationTime, String description, String answeredAt, String userId, Boolean completed, List<Question> questions) {
+        this.id = id;
+        this.numberOfQuestions = numberOfQuestions;
+        this.numberCorrectedAnswers = numberCorrectedAnswers;
+        this.creationTime = creationTime;
+        this.description = description;
+        this.answeredAt = answeredAt;
+        this.userId = userId;
+        this.completed = completed;
+        this.questions = questions;
     }
 
     public Questionnaire() {

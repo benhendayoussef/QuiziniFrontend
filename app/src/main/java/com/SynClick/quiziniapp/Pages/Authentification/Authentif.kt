@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -248,9 +249,10 @@ fun SignInFragment() {
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,       // Color when focused
                 unfocusedBorderColor = MaterialTheme.colorScheme.primary,     // Color when unfocused
-                disabledBorderColor =MaterialTheme.colorScheme.primary, // Color when disabled
-                errorBorderColor =MaterialTheme.colorScheme.secondary           // Color when there's an error
+                disabledBorderColor = MaterialTheme.colorScheme.primary,      // Color when disabled
+                errorBorderColor = MaterialTheme.colorScheme.secondary        // Color when there's an error
             ),
+            visualTransformation = PasswordVisualTransformation(),            // Mask the input
             modifier = Modifier.fillMaxWidth()
         )
     }

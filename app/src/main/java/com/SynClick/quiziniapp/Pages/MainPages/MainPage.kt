@@ -149,7 +149,7 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
                                 HomePage(1 - FragmentWidth,setSelecteditem)
                             }
                             "quiz" -> {
-                                QuizPage(FragmentWidth =1-FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) })
+                                QuizPage(FragmentWidth =1-FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) }, goToHome = {setSelecteditem("Home")})
                             }
                             "Chat Bot" -> {
                                 Text("Chat Bot", modifier = Modifier.padding(paddingValues))

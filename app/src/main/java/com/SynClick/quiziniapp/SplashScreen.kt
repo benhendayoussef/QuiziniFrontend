@@ -113,7 +113,7 @@ fun SplashScreen() {
         animationSpec = tween(durationMillis = durationMillis),
         finishedListener = {
             Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(context, /*OnBoardingScreen*/MainPage::class.java)
+                val intent = Intent(context, /*OnBoardingScreen*/OnBoardingScreen::class.java)
                 context.startActivity(intent)
                 (context as? ComponentActivity)?.finish() // Optional: finish the current activity so the user can't go back to it
             }, 1000)

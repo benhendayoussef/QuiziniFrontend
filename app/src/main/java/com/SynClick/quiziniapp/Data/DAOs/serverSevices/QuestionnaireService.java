@@ -1,6 +1,8 @@
 package com.SynClick.quiziniapp.Data.DAOs.serverSevices;
 
 
+import com.SynClick.quiziniapp.Data.Models.RequestsModel.CorrectQuestionnaireRequest;
+import com.SynClick.quiziniapp.Data.Models.RequestsModel.CorrectQuestionnaireResponse;
 import com.SynClick.quiziniapp.Data.Models.RequestsModel.CreateQuizRequest;
 import com.SynClick.quiziniapp.Data.Models.RequestsModel.createQuizResponse;
 import com.SynClick.quiziniapp.Data.Models.RequestsModel.getAllQuestionnairesResponse;
@@ -18,5 +20,7 @@ public interface QuestionnaireService {
     Call<getAllQuestionnairesResponse> getAllQuestionnaires(@Header("Authorization") String token);
     @POST("api/v1/questionnaire/getQuestionnaire")
     Call<createQuizResponse> getQuestionnaire(@Header("Authorization") String token, @Body CreateQuizRequest createQuizRequest);
+    @POST("api/v1/questionnaire/correctQuestionnaire")
+    Call<CorrectQuestionnaireResponse> correctQuestionnaire(@Header("Authorization") String token, @Body CorrectQuestionnaireRequest correctQuestionnaireRequest);
 
 }

@@ -73,6 +73,6 @@ dependencies {
     implementation (libs.converter.gson)
     implementation ("io.coil-kt:coil-compose:2.1.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
-
+    implementation ("com.google.code.gson:gson:2.8.9")
 
 }

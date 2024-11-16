@@ -86,7 +86,7 @@ fun OnBoardingScreenui() {
         var items=ArrayList<OnBoardingData>()
         items.add(OnBoardingData(R.drawable.onboarding1,MaterialTheme.colorScheme.primary,"Ai generated Quizzes","be the first to use Ai to Create Quizzes"))
         items.add(OnBoardingData(R.drawable.onboarding2,MaterialTheme.colorScheme.secondary,"Answer the Quizzes","Answer the Quizzes and get your score"))
-        items.add(OnBoardingData(R.drawable.onboarding3,MaterialTheme.colorScheme.onTertiary,"get your Results","Get your results and share with your friends"))
+        items.add(OnBoardingData(R.drawable.onboarding3,MaterialTheme.colorScheme.tertiary,"get your Results","Get your results and share with your friends"))
         val pagerState = rememberPagerState(
             pageCount = items.size,
             initialOffscreenLimit = 2,
