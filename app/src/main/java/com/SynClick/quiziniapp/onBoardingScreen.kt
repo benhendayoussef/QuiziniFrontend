@@ -158,7 +158,7 @@ fun OnboardingPager(item: List<OnBoardingData>, pagerState: PagerState, modifier
                             modifier= Modifier
                                 .fillMaxWidth()
                                 .padding(top = 20.dp, start = 40.dp, end = 30.dp),
-                            color=Color.Gray,
+
                             fontFamily = MaterialTheme.typography.titleLarge.fontFamily,
                             textAlign=TextAlign.Center,
                             fontSize=17.sp,
@@ -183,7 +183,7 @@ fun OnboardingPager(item: List<OnBoardingData>, pagerState: PagerState, modifier
                                     }) {
                                     Text(
                                         text = "Skip Now",
-                                        color = Color(0xFF292D32),
+                                        color = item[pagerState.currentPage].color,
                                         fontFamily = MaterialTheme.typography.titleLarge.fontFamily,
                                         fontSize = 14.sp,
                                         fontWeight = FontWeight.SemiBold,

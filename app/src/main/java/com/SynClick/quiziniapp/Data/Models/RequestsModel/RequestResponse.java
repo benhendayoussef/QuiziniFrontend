@@ -1,14 +1,17 @@
 package com.SynClick.quiziniapp.Data.Models.RequestsModel;
 
+import com.SynClick.quiziniapp.Data.Models.userEntityDto;
+
 public class RequestResponse {
-    String message,token;
+    String message;
+    userEntityDto userDetails;
 
     public RequestResponse() {
     }
 
-    public RequestResponse(String message, String token) {
+    public RequestResponse(String message, userEntityDto userDetails) {
         this.message = message;
-        this.token = token;
+        this.userDetails = userDetails;
     }
 
     public String getMessage() {
@@ -19,11 +22,11 @@ public class RequestResponse {
         this.message = message;
     }
 
-    public String getToken() {
-        return token;
+    public userEntityDto getUserDetails() {
+        return userDetails;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUserDetails(userEntityDto userDetails) {
+        this.userDetails = userDetails;
     }
 }

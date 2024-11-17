@@ -184,13 +184,13 @@ fun HomePage(FragmentWidth:Float,onSelectedItemChange: (String) -> Unit) {
                                 .height((50*FragmentWidth).dp),
                             shape = RoundedCornerShape(20.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
+                                containerColor = MaterialTheme.colorScheme.background,
                             )
                         ){
                             Text(text =if(creatingQuiz) "Creating ..." else "Start Quizz",
                                 fontSize = (14*FragmentWidth).sp,
                                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                color = Color.Black,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 modifier = Modifier.padding((5*FragmentWidth).dp)
                             )
 

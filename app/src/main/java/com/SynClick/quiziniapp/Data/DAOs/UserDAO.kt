@@ -23,7 +23,11 @@ class UserDAO {
                     if (response.isSuccessful && response.body() != null) {
                         // If successful and body is not null, use the message from the body
                         val responseMessage = response.body()?.message ?: "User signed in successfully"
-                        Data.token = response.body()?.token ?: ""
+                        Data.token = response.body()?.userDetails?.token ?: ""
+                        Data.user = response.body()?.userDetails
+
+                        val gson:Gson= Gson()
+                        println("Request authentif :"+gson.toJson(response.body()))
                         println("Token: ${Data.token}")
                         continuation.resume(Pair(true, responseMessage))
                         println("Response message: $responseMessage")

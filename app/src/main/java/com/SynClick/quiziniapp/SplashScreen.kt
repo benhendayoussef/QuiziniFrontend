@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.SynClick.quiziniapp.Assets.LoadingAnimation
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.ClientService
+import com.SynClick.quiziniapp.Data.DAOs.serverSevices.PostService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.QuestionnaireService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.Services
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.TopicService
@@ -70,6 +71,8 @@ class MainActivity : ComponentActivity() {
         Services.setTopicService(topicService)
         val questionnaireService: QuestionnaireService = retrofit.create(QuestionnaireService::class.java)
         Services.setQuestionnaireService(questionnaireService)
+        val postService: PostService = retrofit.create(PostService::class.java)
+        Services.setPostService(postService)
     }
 }
 

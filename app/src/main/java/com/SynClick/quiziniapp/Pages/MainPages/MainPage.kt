@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,6 +42,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -152,10 +154,10 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
                                 QuizPage(FragmentWidth =1-FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) }, goToHome = {setSelecteditem("Home")})
                             }
                             "Chat Bot" -> {
-                                Text("Chat Bot", modifier = Modifier.padding(paddingValues))
+                                StayTunedChatBot(1 - FragmentWidth)
                             }
                             "news" -> {
-                                Text("News", modifier = Modifier.padding(paddingValues))
+                                NewsPage(1 - FragmentWidth)
                             }
                             "Close" -> {
                                 Button(onClick = { onMenuToggle(false) }, modifier = Modifier.padding(paddingValues)) {
@@ -170,6 +172,61 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
         }
     }
 }
+@Composable
+fun StayTunedChatBot(FragmentWidth:Float){
+        Column(modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+
+            Image(painter = painterResource(R.drawable.chat_bot_png),
+                contentDescription = "chatbot image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),)
+
+            Text("Chat Bot",
+                modifier = Modifier.padding((10*FragmentWidth).dp),
+                fontSize = (60*FragmentWidth).sp,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Black,
+
+            )
+            Text("Stay Tuned",
+                modifier = Modifier.padding((10*FragmentWidth).dp),
+                fontSize = (50*FragmentWidth).sp,
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.Black,
+            )
+        }
+}
+@Composable
+fun StayTunedNews(FragmentWidth:Float){Column(modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally) {
+
+    Image(painter = painterResource(R.drawable.news_png),
+        contentDescription = "chatbot image",
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f),)
+
+    Text("News",
+        modifier = Modifier.padding((10*FragmentWidth).dp),
+        fontSize = (60*FragmentWidth).sp,
+        color = MaterialTheme.colorScheme.primary,
+        fontWeight = FontWeight.Black,
+
+        )
+    Text("Stay Tuned",
+        modifier = Modifier.padding((10*FragmentWidth).dp),
+        fontSize = (50*FragmentWidth).sp,
+        color = MaterialTheme.colorScheme.secondary,
+        fontWeight = FontWeight.Black,
+    )
+}
+}
+
+
 
 @Composable
 fun Menu(selectedItem: String, onItemSelected: (String) -> Unit, menuRotationY: Float) {
@@ -190,7 +247,7 @@ fun Menu(selectedItem: String, onItemSelected: (String) -> Unit, menuRotationY: 
         Spacer(modifier = Modifier.height(50.dp))
         Data.user?.name?.let {
             Text(text = "Welcome $it",
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 25.sp,
                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
             )
@@ -231,7 +288,7 @@ fun MenuItem(item: String, selectedItem: String, onItemSelected: (String) -> Uni
                 "Close" -> R.drawable.close
                 else -> R.drawable.js
             }
-            val tintColor = if (item == selectedItem) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondary
+            val tintColor = if (item == selectedItem) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary
 
             Image(
                 painter = painterResource(id = imageRes),
@@ -246,7 +303,7 @@ fun MenuItem(item: String, selectedItem: String, onItemSelected: (String) -> Uni
             Spacer(modifier =Modifier.size(30.dp))
             Text(
                 text = item,
-                color = if (item == selectedItem) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondary,
+                color = if (item == selectedItem) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary,
                 fontSize = 20.sp,
                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
             )

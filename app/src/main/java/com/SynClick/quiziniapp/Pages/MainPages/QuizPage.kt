@@ -134,7 +134,9 @@ fun startQuiz(FragmentWidth: Float,nextState:()->Unit) {
                 Image(
                     painter = painterResource(id = R.drawable.question),
                     contentDescription = "Question Info",
-                    modifier = Modifier.width((60 * FragmentWidth).dp)
+                    modifier = Modifier.width((60 * FragmentWidth).dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
+
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -159,7 +161,9 @@ fun startQuiz(FragmentWidth: Float,nextState:()->Unit) {
                 Image(
                     painter = painterResource(id = R.drawable.timer),
                     contentDescription = "Question Info",
-                    modifier = Modifier.width((60 * FragmentWidth).dp)
+                    modifier = Modifier.width((60 * FragmentWidth).dp),
+
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -232,6 +236,7 @@ fun startQuiz(FragmentWidth: Float,nextState:()->Unit) {
         ){
             Text(text ="Hold to start",
                 modifier = Modifier.padding((16*FragmentWidth).dp),
+
                 fontSize = (25*FragmentWidth).sp,)
         }
     }
@@ -267,6 +272,9 @@ fun endQuiz(FragmentWidth: Float,nextState:()->Unit,reponse:List<QuestionReponse
 
     val (Result, setResult) = remember { mutableStateOf(Questionnaire()) }
     val coroutineScope = rememberCoroutineScope()
+    val (error, setError) = remember { mutableStateOf(false) }
+    val (errorMessage, setErrorMessage) = remember { mutableStateOf("") }
+
     val (GettingResult, setGettingResult) = remember { mutableStateOf(false) }
     val serverResponseDeferred = CompletableDeferred<Unit>()
 
@@ -299,6 +307,8 @@ fun endQuiz(FragmentWidth: Float,nextState:()->Unit,reponse:List<QuestionReponse
                     println("error" + response.errorBody()?.string())
                     println("error" + response.message())
                     println("error" + response.code())
+                    setError(true)
+                    setErrorMessage(response.message())
 
                 }
             } catch (e: Exception) {

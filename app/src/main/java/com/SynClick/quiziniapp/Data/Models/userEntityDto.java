@@ -10,16 +10,17 @@ public class userEntityDto {
     private String lastName;
     private String email;
     private String password;
-    private LocalDate birthDay;
+    private String birthDay;
     private String address;
     private Boolean isBanned;
-    private LocalDateTime createdDate;
-    private LocalDateTime  updatedDate;
+    private String createdDate;
+    private String  updatedDate;
     private Set<String> questionsId;
     private Set<Integer> topicsId;
     private Set<String> topicsName;
+    private String token;
 
-    public userEntityDto(String id, String name, String lastName, String email, String password, LocalDate birthDay, String address, Boolean isBanned, LocalDateTime createdDate, LocalDateTime updatedDate, Set<String> questionsId, Set<Integer> topicsId, Set<String> topicsName) {
+    public userEntityDto(String id, String name, String lastName, String email, String password, String birthDay, String address, Boolean isBanned, String createdDate, String updatedDate, Set<String> questionsId, Set<Integer> topicsId, Set<String> topicsName, String token) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -33,6 +34,7 @@ public class userEntityDto {
         this.questionsId = questionsId;
         this.topicsId = topicsId;
         this.topicsName = topicsName;
+        this.token = token;
     }
     public userEntityDto() {
 
@@ -88,11 +90,11 @@ public class userEntityDto {
         this.password = password;
     }
 
-    public LocalDate getBirthDay() {
+    public String getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(LocalDate birthDay) {
+    public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
 
@@ -112,19 +114,19 @@ public class userEntityDto {
         isBanned = banned;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public LocalDateTime getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(LocalDateTime updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -150,5 +152,13 @@ public class userEntityDto {
 
     public void setTopicsName(Set<String> topicsName) {
         this.topicsName = topicsName;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

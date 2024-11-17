@@ -276,7 +276,8 @@ fun DifficultySelector(topic: String, level: Int,changeable:Boolean, onDifficult
     ) {
         Text(
             text = if (changeable) "Select Difficulty for $topic" else "$topic is already selected",
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(5.dp))
         if (changeable) {
@@ -291,7 +292,9 @@ fun DifficultySelector(topic: String, level: Int,changeable:Boolean, onDifficult
                 steps = difficultyLevels.size - 2,
                 modifier = Modifier.fillMaxWidth()
             )
-            Text(text = "Selected Difficulty: $selectedDifficulty", fontSize = 18.sp)
+            Text(text = "Selected Difficulty: $selectedDifficulty",
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.onBackground)
 
         }
     }
