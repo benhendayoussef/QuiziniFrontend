@@ -184,7 +184,7 @@ fun startQuiz(FragmentWidth: Float,nextState:()->Unit) {
             }
 
             Spacer(modifier =Modifier.height((40*FragmentWidth).dp))
-            DashedLine(color = Color.Black, thickness = 2.dp, dashLength = 8.dp, gapLength = 4.dp)
+            DashedLine(color = MaterialTheme.colorScheme.onBackground, thickness = 2.dp, dashLength = 8.dp, gapLength = 4.dp)
 
             Spacer(modifier =Modifier.height((40*FragmentWidth).dp))
             Text(text = "Before You Start,",
@@ -435,8 +435,10 @@ fun endQuiz(FragmentWidth: Float,nextState:()->Unit,reponse:List<QuestionReponse
                                 )
                             ) {
 
+
+
                             }
-                            DashedLine(color = Color.Black, thickness = 2.dp, dashLength = 8.dp, gapLength = 4.dp,
+                            DashedLine(color = MaterialTheme.colorScheme.onBackground, thickness = 2.dp, dashLength = 8.dp, gapLength = 4.dp,
                                 modifier = Modifier
                                     .fillMaxWidth(0.8f)
                                     .height(2.dp))
@@ -710,7 +712,7 @@ fun questionPage(FragmentWidth: Float,currentQuestion:Int,question:Question,next
                     .padding(5.dp)
                     .clickable(onClick = {
                         isRunning = false
-                        if (selectedAnswer.size > 0) {
+                        if (selectedAnswer.filter { it.value == true }.size > 0) {
                             addAnswer(
                                 QuestionReponse(
                                     question.id,
@@ -769,7 +771,7 @@ fun questionPage(FragmentWidth: Float,currentQuestion:Int,question:Question,next
 
 @Composable
 fun DashedLine(
-    color: Color = Color.Gray,
+    color: Color = MaterialTheme.colorScheme.onBackground,
     thickness: Dp = 1.dp,
     dashLength: Dp = 10.dp,
     gapLength: Dp = 10.dp,

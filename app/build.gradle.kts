@@ -75,6 +75,7 @@ dependencies {
     implementation ("io.coil-kt:coil-compose:2.1.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
     implementation ("com.google.code.gson:gson:2.8.9")
+    implementation ("org.jsoup:jsoup:1.14.3")
 
 
 

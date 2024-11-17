@@ -112,7 +112,7 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
                     if(topMenuVisibility)
                         Row(modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp),
+                            .padding(start =20.dp, top = 10.dp, end = 10.dp, bottom = 10.dp),
                             verticalAlignment = Alignment.CenterVertically,) {
                             val tintColor = if (isMenuSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
 
@@ -120,7 +120,7 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
                                 painter = painterResource(id = R.drawable.hamburger),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .size(50 * (1 - FragmentWidth).dp)
+                                    .size(40 * (1 - FragmentWidth).dp)
                                     .clickable(onClick = {
                                         onMenuToggle(!isMenuSelected)
                                         println(selectedItem)
@@ -160,9 +160,11 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
                                 NewsPage(1 - FragmentWidth)
                             }
                             "Close" -> {
+
                                 Button(onClick = { onMenuToggle(false) }, modifier = Modifier.padding(paddingValues)) {
                                     Text("Close")
                                 }
+
                             }
                         }
                     }
@@ -184,8 +186,10 @@ fun StayTunedChatBot(FragmentWidth:Float){
                     .fillMaxWidth()
                     .aspectRatio(1f),)
 
-            Text("Chat Bot",
+            Text("Learn With Quizini Bot",
+                lineHeight = (60*FragmentWidth).sp,
                 modifier = Modifier.padding((10*FragmentWidth).dp),
+                textAlign = TextAlign.Center,
                 fontSize = (60*FragmentWidth).sp,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Black,

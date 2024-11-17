@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -227,12 +228,13 @@ fun SignInFragment() {
             shape = RoundedCornerShape(15.dp),
             value = Email.value,
             isError = !isEmailValid.value,
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
             onValueChange = { Email.value = it ;isEmailValid.value=checkEmail(Email.value.text)},
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,       // Color when focused
                 unfocusedBorderColor = MaterialTheme.colorScheme.primary,     // Color when unfocused
                 disabledBorderColor =MaterialTheme.colorScheme.primary, // Color when disabled
-                errorBorderColor =MaterialTheme.colorScheme.secondary           // Color when there's an error
+                errorBorderColor =MaterialTheme.colorScheme.secondary ,          // Color when there's an error
             ),
             label = { Text("Enter your e-mail address", color = MaterialTheme.colorScheme.onBackground) }, // Label similar to TextInputLayout
             modifier = Modifier.fillMaxWidth()
@@ -245,13 +247,14 @@ fun SignInFragment() {
             shape = RoundedCornerShape(15.dp),
             value = password.value,
             onValueChange = { password.value = it },
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
             label = { Text("Enter your password", color = MaterialTheme.colorScheme.onBackground) }, // Label similar to TextInputLayout
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,       // Color when focused
                 unfocusedBorderColor = MaterialTheme.colorScheme.primary,     // Color when unfocused
                 disabledBorderColor = MaterialTheme.colorScheme.primary,      // Color when disabled
-                errorBorderColor = MaterialTheme.colorScheme.secondary        // Color when there's an error
-            ),
+                errorBorderColor = MaterialTheme.colorScheme.secondary,       // Color when there's an error
+                ),
             visualTransformation = PasswordVisualTransformation(),            // Mask the input
             modifier = Modifier.fillMaxWidth()
         )
