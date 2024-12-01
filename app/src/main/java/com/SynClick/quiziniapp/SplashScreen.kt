@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.SynClick.quiziniapp.Assets.LoadingAnimation
+import com.SynClick.quiziniapp.Data.DAOs.serverSevices.ChatBotService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.ClientService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.PostService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.QuestionnaireService
@@ -58,11 +59,12 @@ class MainActivity : ComponentActivity() {
                 SplashScreen()
             }
         }
-        val Url = "http://192.168.1.14:8080/"
-        //val UrlFac = "http://192.168.4.246:8080/"
+
+        val Url = "http://192.168.1.13:8080/"
+        val UrlFac = "https://a99f-102-107-78-207.ngrok-free.app"
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(Url)
+            .baseUrl(UrlFac)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val clientService: ClientService = retrofit.create(ClientService::class.java)
@@ -73,6 +75,8 @@ class MainActivity : ComponentActivity() {
         Services.setQuestionnaireService(questionnaireService)
         val postService: PostService = retrofit.create(PostService::class.java)
         Services.setPostService(postService)
+        val chatBotService: ChatBotService = retrofit.create(ChatBotService::class.java)
+        Services.setChatBotService(chatBotService)
     }
 }
 
@@ -116,7 +120,7 @@ fun SplashScreen() {
         animationSpec = tween(durationMillis = durationMillis),
         finishedListener = {
             Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(context, /*OnBoardingScreen*/OnBoardingScreen::class.java)
+                val intent = Intent(context, /*OnBoardingScreen*/MainPage::class.java)
                 context.startActivity(intent)
                 (context as? ComponentActivity)?.finish() // Optional: finish the current activity so the user can't go back to it
             }, 1000)

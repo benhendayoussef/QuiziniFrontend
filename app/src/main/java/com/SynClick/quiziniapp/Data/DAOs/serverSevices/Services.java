@@ -1,11 +1,26 @@
 package com.SynClick.quiziniapp.Data.DAOs.serverSevices;
 
+import com.SynClick.quiziniapp.Data.Models.Conversation;
+
 public class Services {
 
     public static ClientService clientService;
     public static TopicService topicService;
     public static QuestionnaireService questionnaireService;
     public static PostService postService;
+    public static ChatBotService chatBotService;
+
+
+
+
+
+    public static ChatBotService getChatBotService() {
+        return chatBotService;
+    }
+
+    public static void setChatBotService(ChatBotService chatBotService) {
+        Services.chatBotService = chatBotService;
+    }
 
 
 

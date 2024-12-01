@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id ("io.freefair.lombok") version "6.6.1" // Add the Lombok plugin
+
+
 }
 
 android {
@@ -76,7 +79,9 @@ dependencies {
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("org.jsoup:jsoup:1.14.3")
-
-
-
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:<latest_version>")
+    implementation ("org.projectlombok:lombok:1.18.28") // Add the Lombok dependency
+    annotationProcessor ("org.projectlombok:lombok:1.18.28") // Add the annotation processor
+    testImplementation ("org.projectlombok:lombok:1.18.28")
+    testAnnotationProcessor ("org.projectlombok:lombok:1.18.28")
 }

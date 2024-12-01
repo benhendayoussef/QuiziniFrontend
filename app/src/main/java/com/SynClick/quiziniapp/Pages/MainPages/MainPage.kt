@@ -154,7 +154,7 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
                                 QuizPage(FragmentWidth =1-FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) }, goToHome = {setSelecteditem("Home")})
                             }
                             "Chat Bot" -> {
-                                StayTunedChatBot(1 - FragmentWidth)
+                                ChatBotPage(1 - FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) },getMenu= {onMenuToggle(it)})
                             }
                             "news" -> {
                                 NewsPage(1 - FragmentWidth)
