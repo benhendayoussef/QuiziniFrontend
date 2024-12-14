@@ -39,10 +39,7 @@ import com.SynClick.quiziniapp.Data.DAOs.serverSevices.QuestionnaireService
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.Services
 import com.SynClick.quiziniapp.Data.DAOs.serverSevices.TopicService
 import com.SynClick.quiziniapp.Data.Data
-import com.SynClick.quiziniapp.Data.Models.Topic
-import com.SynClick.quiziniapp.Pages.Authentification.Authentif
 import com.SynClick.quiziniapp.Pages.MainPages.MainPage
-import com.SynClick.quiziniapp.Pages.Topic.TopicSelection
 import com.SynClick.quiziniapp.ui.theme.QuiziniAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,7 +58,7 @@ class MainActivity : ComponentActivity() {
         }
 
         val Url = "http://192.168.1.13:8080/"
-        val UrlFac = "https://a99f-102-107-78-207.ngrok-free.app"
+        val UrlFac ="https://65bd-102-171-207-172.ngrok-free.app/"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(UrlFac)

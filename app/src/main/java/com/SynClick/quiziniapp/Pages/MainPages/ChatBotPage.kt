@@ -3,6 +3,7 @@ package com.SynClick.quiziniapp.Pages.MainPages
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import android.text.Html
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.animateFloatAsState
@@ -196,7 +197,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
                     val call = Services.getChatBotService()
                         .getConversations(
                             "Bearer " + Data.token,
-                            GetConversationRequest(10,
+                            GetConversationRequest(20,
                                 ConversationList.map { it.id }.toList()
                             )
                         )
@@ -454,236 +455,238 @@ fun ConversationMenu(
                         .fillMaxHeight()
                         .background(MaterialTheme.colorScheme.background))
                     {
-                        Column(
+                        LazyColumn(
                             modifier = Modifier
                                 .padding(top=20.dp, start = 10.dp)
                         ) {
-                            Card (
-                                modifier = Modifier
-                                    .clickable {
-                                        newConversation()
-                                        changeConversationBarState()
-                                    }
-                                    .padding(vertical = 20.dp),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.onBackground,
-                                ),
-
-                            ){
-                                Row(
+                            item {
+                                Card(
                                     modifier = Modifier
-                                        .fillMaxWidth(0.8f)
-                                        .padding(5.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
+                                        .clickable {
+                                            newConversation()
+                                            changeConversationBarState()
+                                        }
+                                        .padding(vertical = 20.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.onBackground,
+                                    ),
 
-
-                                    Image(
-                                        painter = painterResource(id = R.drawable.add),
-                                        contentDescription = null,
+                                    ) {
+                                    Row(
                                         modifier = Modifier
-                                            .size((40 * FragmentWidth).dp)
-                                            .clickable(onClick = {
-                                            }),
-                                        alignment = Alignment.CenterStart,
-                                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
-                                    )
-                                    Text(
-                                        text = "New Conversation",
-                                        modifier = Modifier
-                                            .padding(10.dp),
-                                        color = MaterialTheme.colorScheme.background,
-                                        fontSize = ((20 * FragmentWidth)).sp,
-                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Black,
-                                        textAlign = TextAlign.Center,
-                                    )
-                                }
-                            }
+                                            .fillMaxWidth(0.8f)
+                                            .padding(5.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
 
 
-                            if(todayConversations.isNotEmpty()) {
-                                Text(
-                                    text = "Today",
-                                    fontSize = ((20 * FragmentWidth)).sp,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                    textAlign = TextAlign.Center,
-
-                                )
-
-                                Spacer(modifier =Modifier.height(12.dp))
-                                todayConversations.forEach {
-
-                                    Card (
-                                        modifier = Modifier
-                                            .clickable {
-                                                setConversation(it)
-                                                changeConversationBarState()
-                                            },
-                                        colors = CardDefaults.cardColors(
-
-                                            containerColor=(if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
-                                        ),
-
-                                        ){
+                                        Image(
+                                            painter = painterResource(id = R.drawable.add),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size((40 * FragmentWidth).dp)
+                                                .clickable(onClick = {
+                                                }),
+                                            alignment = Alignment.CenterStart,
+                                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
+                                        )
                                         Text(
-                                            text = it.title,
+                                            text = "New Conversation",
                                             modifier = Modifier
                                                 .padding(10.dp),
-                                            color = if(it==CurrentConversation)MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-                                            fontSize = ((17 * FragmentWidth)).sp,
+                                            color = MaterialTheme.colorScheme.background,
+                                            fontSize = ((20 * FragmentWidth)).sp,
+                                            fontWeight = androidx.compose.ui.text.font.FontWeight.Black,
                                             textAlign = TextAlign.Center,
                                         )
                                     }
-
-                                    Spacer(modifier =Modifier.height(12.dp))
                                 }
-                                Spacer(modifier =Modifier.height(25.dp))
-                            }
-                            if(yesterdayConversations.isNotEmpty()) {
-                                Text(
-                                    text = "Yesterday",
-                                    fontSize = ((20 * FragmentWidth)).sp,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Spacer(modifier =Modifier.height(12.dp))
-                                yesterdayConversations.forEach {
-                                    Card (
-                                        modifier = Modifier
-                                            .clickable {
-                                                setConversation(it)
-                                                changeConversationBarState()
-                                            },
-                                        colors = CardDefaults.cardColors(
 
-                                            containerColor=(if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
+
+                                if (todayConversations.isNotEmpty()) {
+                                    Text(
+                                        text = "Today",
+                                        fontSize = ((20 * FragmentWidth)).sp,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        textAlign = TextAlign.Center,
+
+                                        )
+
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    todayConversations.forEach {
+
+                                        Card(
+                                            modifier = Modifier
+                                                .clickable {
+                                                    setConversation(it)
+                                                    changeConversationBarState()
+                                                },
+                                            colors = CardDefaults.cardColors(
+
+                                                containerColor = (if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
                                             ),
 
-                                    ){
-                                        Text(
-                                            text = it.title,
-                                            modifier = Modifier
-                                                .padding(10.dp),
-                                            color = if(it==CurrentConversation)MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-                                            fontSize = ((17 * FragmentWidth)).sp,
-                                            textAlign = TextAlign.Center,
-                                        )
+                                            ) {
+                                            Text(
+                                                text = it.title,
+                                                modifier = Modifier
+                                                    .padding(10.dp),
+                                                color = if (it == CurrentConversation) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
+                                                fontSize = ((17 * FragmentWidth)).sp,
+                                                textAlign = TextAlign.Center,
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(12.dp))
                                     }
-
-
-                                    Spacer(modifier =Modifier.height(12.dp))
+                                    Spacer(modifier = Modifier.height(25.dp))
                                 }
-                                Spacer(modifier =Modifier.height(25.dp))
-                            }
-                            if(thisWeekConversations.isNotEmpty()) {
-                                Text(
-                                    text = "This Week",
-                                    fontSize = ((20 * FragmentWidth)).sp,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Spacer(modifier =Modifier.height(12.dp))
-                                thisWeekConversations.forEach {
-
-                                    Card (
-                                        modifier = Modifier
-                                            .clickable {
-                                                setConversation(it)
-                                                changeConversationBarState()
-                                            },
-                                        colors = CardDefaults.cardColors(
-
-                                            containerColor=(if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
-                                        ),
-
-                                        ){
-                                        Text(
-                                            text = it.title,
+                                if (yesterdayConversations.isNotEmpty()) {
+                                    Text(
+                                        text = "Yesterday",
+                                        fontSize = ((20 * FragmentWidth)).sp,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    yesterdayConversations.forEach {
+                                        Card(
                                             modifier = Modifier
-                                                .padding(10.dp),
-                                            color = if(it==CurrentConversation)MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-                                            fontSize = ((17 * FragmentWidth)).sp,
-                                            textAlign = TextAlign.Center,
-                                        )
+                                                .clickable {
+                                                    setConversation(it)
+                                                    changeConversationBarState()
+                                                },
+                                            colors = CardDefaults.cardColors(
+
+                                                containerColor = (if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
+                                            ),
+
+                                            ) {
+                                            Text(
+                                                text = it.title,
+                                                modifier = Modifier
+                                                    .padding(10.dp),
+                                                color = if (it == CurrentConversation) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
+                                                fontSize = ((17 * FragmentWidth)).sp,
+                                                textAlign = TextAlign.Center,
+                                            )
+                                        }
+
+
+                                        Spacer(modifier = Modifier.height(12.dp))
                                     }
-
-                                    Spacer(modifier =Modifier.height(12.dp))
+                                    Spacer(modifier = Modifier.height(25.dp))
                                 }
-                                Spacer(modifier =Modifier.height(25.dp))
-                            }
-                            if(lastMonthConversations.isNotEmpty()) {
+                                if (thisWeekConversations.isNotEmpty()) {
+                                    Text(
+                                        text = "This Week",
+                                        fontSize = ((20 * FragmentWidth)).sp,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    thisWeekConversations.forEach {
 
-                                Text(
-                                    text = "Last Month",
-                                    fontSize = ((20 * FragmentWidth)).sp,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Spacer(modifier =Modifier.height(12.dp))
-                                lastMonthConversations.forEach {
-
-                                    Card (
-                                        modifier = Modifier
-                                            .clickable {
-                                                setConversation(it)
-                                                changeConversationBarState()
-                                            },
-                                        colors = CardDefaults.cardColors(
-
-                                            containerColor=(if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
-                                        ),
-
-                                        ){
-                                        Text(
-                                            text = it.title,
+                                        Card(
                                             modifier = Modifier
-                                                .padding(10.dp),
-                                            color = if(it==CurrentConversation)MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-                                            fontSize = ((17 * FragmentWidth)).sp,
-                                            textAlign = TextAlign.Center,
-                                        )
+                                                .clickable {
+                                                    setConversation(it)
+                                                    changeConversationBarState()
+                                                },
+                                            colors = CardDefaults.cardColors(
+
+                                                containerColor = (if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
+                                            ),
+
+                                            ) {
+                                            Text(
+                                                text = it.title,
+                                                modifier = Modifier
+                                                    .padding(10.dp),
+                                                color = if (it == CurrentConversation) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
+                                                fontSize = ((17 * FragmentWidth)).sp,
+                                                textAlign = TextAlign.Center,
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(12.dp))
                                     }
-
-                                    Spacer(modifier =Modifier.height(12.dp))
+                                    Spacer(modifier = Modifier.height(25.dp))
                                 }
-                                Spacer(modifier =Modifier.height(25.dp))
-                            }
-                            if(olderConversations.isNotEmpty()) {
-                                Text(
-                                    text = "Older",
-                                    fontSize = ((20 * FragmentWidth)).sp,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Spacer(modifier =Modifier.height(12.dp))
-                                olderConversations.forEach {
+                                if (lastMonthConversations.isNotEmpty()) {
 
-                                    Card (
-                                        modifier = Modifier
-                                            .clickable {
-                                                setConversation(it)
-                                                changeConversationBarState()
-                                            },
-                                        colors = CardDefaults.cardColors(
+                                    Text(
+                                        text = "Last Month",
+                                        fontSize = ((20 * FragmentWidth)).sp,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    lastMonthConversations.forEach {
 
-                                            containerColor=(if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
-                                        ),
-
-                                        ){
-                                        Text(
-                                            text = it.title,
+                                        Card(
                                             modifier = Modifier
-                                                .padding(10.dp),
-                                            color = if(it==CurrentConversation)MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-                                            fontSize = ((17 * FragmentWidth)).sp,
-                                            textAlign = TextAlign.Center,
-                                        )
-                                    }
+                                                .clickable {
+                                                    setConversation(it)
+                                                    changeConversationBarState()
+                                                },
+                                            colors = CardDefaults.cardColors(
 
-                                    Spacer(modifier =Modifier.height(12.dp))
+                                                containerColor = (if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
+                                            ),
+
+                                            ) {
+                                            Text(
+                                                text = it.title,
+                                                modifier = Modifier
+                                                    .padding(10.dp),
+                                                color = if (it == CurrentConversation) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
+                                                fontSize = ((17 * FragmentWidth)).sp,
+                                                textAlign = TextAlign.Center,
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(12.dp))
+                                    }
+                                    Spacer(modifier = Modifier.height(25.dp))
                                 }
-                                Spacer(modifier =Modifier.height(25.dp))
+                                if (olderConversations.isNotEmpty()) {
+                                    Text(
+                                        text = "Older",
+                                        fontSize = ((20 * FragmentWidth)).sp,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    olderConversations.forEach {
+
+                                        Card(
+                                            modifier = Modifier
+                                                .clickable {
+                                                    setConversation(it)
+                                                    changeConversationBarState()
+                                                },
+                                            colors = CardDefaults.cardColors(
+
+                                                containerColor = (if (it == CurrentConversation) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.background),
+                                            ),
+
+                                            ) {
+                                            Text(
+                                                text = it.title,
+                                                modifier = Modifier
+                                                    .padding(10.dp),
+                                                color = if (it == CurrentConversation) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
+                                                fontSize = ((17 * FragmentWidth)).sp,
+                                                textAlign = TextAlign.Center,
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(12.dp))
+                                    }
+                                    Spacer(modifier = Modifier.height(25.dp))
+                                }
                             }
 
 
@@ -1059,7 +1062,8 @@ fun Input(FragmentWidth:Float,InputText:String, setInputText:(String)->Unit,send
 
 
 fun splitCode(text:String): MutableList<String> {
-    val regex = "(<code>(.*)</code>)".toRegex()
+    //return MutableList(1) {text }
+    val regex = "(?s)<code>(.*?)</code>".toRegex()
 
     val parts = mutableListOf<String>()
 
@@ -1102,7 +1106,7 @@ fun CodeDisplayScreen(input: String) {
 @Composable
 fun HighlightedText(text: String) {
 
-    val parts = Regex("[|.(){} ,]+|[^|.(){} ,]+")
+    val parts = Regex("[|.(){}\n ,]+|[^|.(){}\n ,]+")
         .findAll(text)
         .map { it.value }
         .toList()
@@ -1115,13 +1119,18 @@ fun HighlightedText(text: String) {
                     append("$word ")
                 }
             }
-            else if (word == "module" || word == "requires") {
+            else if (word == "module" || word == "requires" || word=="def" || word=="class" || word=="return" || word=="import" || word=="from" || word=="as" || word=="if" || word=="else" || word=="elif" || word=="for" || word=="in" || word=="while" || word=="try" || word=="except" || word=="finally" || word=="raise" || word=="assert" || word=="with" || word=="yield" || word=="lambda" || word=="pass" || word=="break" || word=="continue" || word=="global" || word=="nonlocal" || word=="del" || word=="True" || word=="False" || word=="None" || word=="and" || word=="or" || word=="public" || word=="private" || word=="protected" || word=="static" || word=="final" || word=="abstract" || word=="interface" || word=="extends" || word=="implements" || word=="super" || word=="this" || word=="new" || word=="instanceof" || word=="const" || word=="let" || word=="var" || word=="int" || word=="float" || word=="double" || word=="char" || word=="String" || word=="boolean" || word=="void" || word=="byte" || word=="short" || word=="long" || word=="unsigned" || word=="signed" || word=="struct" || word=="union" || word=="enum" || word=="typedef" || word=="sizeof" || word=="auto" || word=="register" || word=="volatile" || word=="extern" || word=="static" || word=="const" || word=="inline" || word=="restrict" || word=="void" || word=="return" || word=="goto" || word=="continue" || word=="break" || word=="if" || word=="else" || word=="switch" || word=="case" || word=="default" || word=="while" || word=="do" || word=="for" || word=="foreach" || word=="in" || word=="try" || word=="catch" || word=="finally" || word=="throw" || word=="throws" || word=="assert" || word=="import" || word=="package" || word=="class" || word=="static") {
                 withStyle(style = SpanStyle(color = hexToColor("#2e95d3"))) {
                     append("$word ")
                 }
             }
             else if (Regex("[^a-zA-Z0-9]+").matches(word)) {
                 withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onBackground)) {
+                    append("$word ")
+                }
+            }
+            else if (word == "print"|| word =="System" || word=="out" || word == "println" || word == "printf" || word == "cout" || word == "cin" || word == "scanf" || word == "printf" || word == "scanf" || word == "System.out.println" || word == "System.out.print" || word == "System.out.printf" || word == "System.out.println" || word == "System.out.print" || word == "System.out.printf") {
+                withStyle(style = SpanStyle(color = hexToColor("#e9950c"))) {
                     append("$word ")
                 }
             }
@@ -1132,7 +1141,7 @@ fun HighlightedText(text: String) {
             }
             else if (word == "map" || word == "Flux") {
                 withStyle(style = SpanStyle(color = Color.Red)) {
-                    append("$word ")
+                    append("$word")
                 }
             }
             else {
