@@ -7,10 +7,10 @@ import java.util.List;
 
 public class CorrectQuestionnaireResponse {
     String message;
-    Questionnaire Questionnaire;
-    public CorrectQuestionnaireResponse(String message, Questionnaire Questionnaire) {
+    Questionnaire questionnaire;
+    public CorrectQuestionnaireResponse(String message, Questionnaire questionnaire) {
         this.message = message;
-        this.Questionnaire = Questionnaire;
+        this.questionnaire = questionnaire;
     }
 
     public CorrectQuestionnaireResponse() {
@@ -24,10 +24,10 @@ public class CorrectQuestionnaireResponse {
     }
 
     public Questionnaire getQuestionnaire() {
-        return this.Questionnaire;
+        return this.questionnaire;
     }
-    public void setQuestionnaire(Questionnaire Questionnaire) {
-        this.Questionnaire = Questionnaire;
+    public void setQuestionnaire(Questionnaire questionnaire) {
+        this.questionnaire = questionnaire;
     }
 
 

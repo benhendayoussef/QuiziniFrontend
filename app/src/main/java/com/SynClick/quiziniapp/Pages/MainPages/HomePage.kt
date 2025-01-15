@@ -152,7 +152,7 @@ fun HomePage(FragmentWidth:Float,onSelectedItemChange: (String) -> Unit) {
                                     val call = Services.getQuestionnaireService()
                                         .getQuestionnaire("Bearer " + Data.token,
                                             CreateQuizRequest(
-                                            20, userTopics.map { it.id.toInt() }.toList()))
+                                            10, userTopics.map { it.id.toInt() }.toList()))
                                     val response =
                                         withContext(Dispatchers.IO) { call.execute() }
                                     if (response.isSuccessful) {
@@ -160,7 +160,7 @@ fun HomePage(FragmentWidth:Float,onSelectedItemChange: (String) -> Unit) {
                                         if (quizReponse != null) {
                                             println(quizReponse.questions.size)
                                             Data.ActualQQuestionnaire = quizReponse
-                                            onSelectedItemChange("quiz")
+                                            onSelectedItemChange("Quiz")
                                         }
                                     }
                                     else{

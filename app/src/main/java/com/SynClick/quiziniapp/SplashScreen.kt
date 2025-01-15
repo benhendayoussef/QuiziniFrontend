@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
         }
 
         val Url = "http://192.168.1.13:8080/"
-        val UrlFac ="https://65bd-102-171-207-172.ngrok-free.app/"
+        val UrlFac ="https://eadb-2c0f-f698-f1c5-7dfa-9c21-3517-ed20-9c21.ngrok-free.app "
 
         val retrofit = Retrofit.Builder()
             .baseUrl(UrlFac)
@@ -117,7 +117,7 @@ fun SplashScreen() {
         animationSpec = tween(durationMillis = durationMillis),
         finishedListener = {
             Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(context, /*OnBoardingScreen*/MainPage::class.java)
+                val intent = Intent(context, /*OnBoardingScreen*/OnBoardingScreen::class.java)
                 context.startActivity(intent)
                 (context as? ComponentActivity)?.finish() // Optional: finish the current activity so the user can't go back to it
             }, 1000)

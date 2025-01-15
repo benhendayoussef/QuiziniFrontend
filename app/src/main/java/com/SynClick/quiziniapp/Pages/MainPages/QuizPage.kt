@@ -295,12 +295,13 @@ fun endQuiz(FragmentWidth: Float,nextState:()->Unit,reponse:List<QuestionReponse
                 val response = withContext(Dispatchers.IO) { call.execute() }
                 if (response.isSuccessful) {
                     val result = response.body()
-                    println(result)
+                    println(gson.toJson(result))
                     if (result != null) {
                         println(result.message)
                     }
                     if (result != null) {
                         result.questionnaire?.let { setResult(it) }
+                        println("result" + gson.toJson(result))
                     }
 
                 } else {
@@ -368,30 +369,40 @@ fun endQuiz(FragmentWidth: Float,nextState:()->Unit,reponse:List<QuestionReponse
 
                         ){
                             if(GettingResult){
-                                val pourcentage= remember { mutableStateOf(Result.numberCorrectedAnswers*100/Result.numberOfQuestions)}
-                               Column(
-                                   modifier = Modifier.fillMaxSize(),
-                                   verticalArrangement = Arrangement.Center,
-                                   horizontalAlignment = Alignment.CenterHorizontally
-                               ) {
-                                   Text(text =  when {
-                                       pourcentage.value < 50 -> "Try harder next time."
-                                       pourcentage.value < 70 -> "You're doing okay, but there's room for improvement."
-                                       pourcentage.value >= 70 -> "Congratulations! You've done a great job!"
-                                       else -> "Invalid score."
-                                   },
-                                       textAlign = TextAlign.Center,
-                                       fontWeight = FontWeight.Bold,
-                                       lineHeight = 30.sp,
-                                       color = MaterialTheme.colorScheme.primary,
-                                       fontSize = (25*FragmentWidth).sp)
-                                   Spacer(modifier = Modifier.height(16.dp))
+                                println("result" + gson.toJson(Result))
+                                var pourcentage= remember { mutableStateOf((Result.numberCorrectedAnswers*100.0f / 10+0.0f).toInt())}
+                                if(Result.numberOfQuestions==0){
 
-                                   Text(text ="${pourcentage.value}%",
-                                       fontWeight = FontWeight.Black,
-                                       color = if(pourcentage.value<50)MaterialTheme.colorScheme.secondary else if(pourcentage.value<80)MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
-                                       fontSize = (50*FragmentWidth).sp)
-                               } 
+                                }
+                                else {
+                                    pourcentage = remember {
+                                        mutableStateOf((Result.numberCorrectedAnswers*100.0f / Result.numberOfQuestions+0.0f).toInt())
+                                    }
+                                }
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Text(text =  when {
+                                            pourcentage.value < 50 -> "Try harder next time."
+                                            pourcentage.value < 70 -> "You're doing okay, but there's room for improvement."
+                                            pourcentage.value >= 70 -> "Congratulations! You've done a great job!"
+                                            else -> "Invalid score."
+                                        },
+                                            textAlign = TextAlign.Center,
+                                            fontWeight = FontWeight.Bold,
+                                            lineHeight = 30.sp,
+                                            color = MaterialTheme.colorScheme.primary,
+                                            fontSize = (25*FragmentWidth).sp)
+                                        Spacer(modifier = Modifier.height(16.dp))
+
+                                        Text(text ="${pourcentage.value}%",
+                                            fontWeight = FontWeight.Black,
+                                            color = if(pourcentage.value<50)MaterialTheme.colorScheme.secondary else if(pourcentage.value<80)MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
+                                            fontSize = (50*FragmentWidth).sp)
+
+                                }
                             }
                             else{
                                 Column(
@@ -461,9 +472,17 @@ fun endQuiz(FragmentWidth: Float,nextState:()->Unit,reponse:List<QuestionReponse
                             .fillMaxSize()
                             .padding(20.dp)
                         ){
-
+                            var pourcentage= remember { mutableStateOf(Result.numberCorrectedAnswers*100/10)}
                             if (GettingResult) {
-                                val pourcentage =remember { mutableStateOf(Result.numberCorrectedAnswers / Result.numberOfQuestions * 100) }
+                                var pourcentage= remember { mutableStateOf((Result.numberCorrectedAnswers*100.0f / 10+0.0f).toInt())}
+                                if(Result.numberOfQuestions==0){
+
+                                }
+                                else {
+                                    pourcentage = remember {
+                                        mutableStateOf((Result.numberCorrectedAnswers*100.0f / Result.numberOfQuestions+0.0f).toInt())
+                                    }
+                                }
                                 Image(
                                     painter = painterResource(id = if(pourcentage.value>=80)R.drawable.gold else if(pourcentage.value>=50)R.drawable.argent else R.drawable.bronze),
                                     contentDescription = "Question Info",

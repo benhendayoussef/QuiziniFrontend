@@ -58,6 +58,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.SynClick.quiziniapp.Pages.Authentification.Authentif
+import com.SynClick.quiziniapp.Pages.MainPages.MainPage
 import kotlinx.coroutines.launch
 
 class OnBoardingScreen : ComponentActivity() {
@@ -177,7 +178,7 @@ fun OnboardingPager(item: List<OnBoardingData>, pagerState: PagerState, modifier
                         ){
                             if(pagerState.currentPage!=item.size-1){
                                 TextButton(onClick = {
-                                    val intent = Intent(context, Authentif::class.java)
+                                    val intent = Intent(context, MainPage::class.java)
                                     context.startActivity(intent)
                                     (context as? ComponentActivity)?.finish();
                                     }) {
@@ -216,7 +217,7 @@ fun OnboardingPager(item: List<OnBoardingData>, pagerState: PagerState, modifier
                             else{
                                 Button(
                                     onClick = {
-                                        val intent = Intent(context, Authentif::class.java)
+                                        val intent = Intent(context, MainPage::class.java)
                                         context.startActivity(intent)
                                         (context as? ComponentActivity)?.finish();
                                     },

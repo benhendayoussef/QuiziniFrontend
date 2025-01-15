@@ -150,13 +150,13 @@ fun MainFragment(selectedItem: String, isMenuSelected: Boolean,setSelecteditem: 
 
                                 HomePage(1 - FragmentWidth,setSelecteditem)
                             }
-                            "quiz" -> {
+                            "Quiz" -> {
                                 QuizPage(FragmentWidth =1-FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) }, goToHome = {setSelecteditem("Home")})
                             }
                             "Chat Bot" -> {
                                 ChatBotPage(1 - FragmentWidth, setTopMenuVisibility = { it:Boolean-> setTopMenuVisibility(it) },getMenu= {onMenuToggle(it)})
                             }
-                            "news" -> {
+                            "News" -> {
                                 NewsPage(1 - FragmentWidth)
                             }
                             "Close" -> {
@@ -259,9 +259,9 @@ fun Menu(selectedItem: String, onItemSelected: (String) -> Unit, menuRotationY: 
         Spacer(modifier = Modifier.height(50.dp))
         Column {
             MenuItem("Home", selectedItem, onItemSelected)
-            MenuItem("quiz", selectedItem, onItemSelected)
+            MenuItem("Quiz", selectedItem, onItemSelected)
             MenuItem("Chat Bot", selectedItem, onItemSelected)
-            MenuItem("news", selectedItem, onItemSelected)
+            MenuItem("News", selectedItem, onItemSelected)
         }
         Spacer(modifier = Modifier.height(50.dp))
         MenuItem("Close", selectedItem, onItemSelected)
@@ -285,9 +285,9 @@ fun MenuItem(item: String, selectedItem: String, onItemSelected: (String) -> Uni
 
         ) {
             val imageRes = when (item) {
-                "news" -> R.drawable.news
+                "News" -> R.drawable.news
                 "Home" -> R.drawable.home
-                "quiz" -> R.drawable.quiz
+                "Quiz" -> R.drawable.quiz
                 "Chat Bot" -> R.drawable.chatbot
                 "Close" -> R.drawable.close
                 else -> R.drawable.js
